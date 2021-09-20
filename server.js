@@ -41,9 +41,8 @@ app.get('/api/:unix([0-9]{10,})', (req, res) => {
 })
 
 app.get('/api/:date(*)', (req, res) => {
-  console.log(req, new Date(req.params.date), Date.parse(req.params.date))
   if (new Date(req.params.date) != 'Invalid Date') {
-    time = new Date(req.params.date)
+    time = Date.parse(req.params.date)
     res.json({unix: time, utc: time.toUTCString()})
 }
   else if (new Date(req.params.date) == 'Invalid Date') {
