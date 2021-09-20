@@ -24,10 +24,7 @@ app.get("/", function (req, res) {
 //   res.json({greeting: 'hello API'});
 // });
 
-app.get("/api/timestamp",(req, res) => {
-  let time = {unix: Date.now(), utc: new Date().toUTCString()}
-  res.json(time)
-})
+
 // app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
 //   let utcTime = new Date(req.params.utc.split(' ')).toUTCString()
 //   let unixTime = Date.parse(utcTime)
@@ -40,12 +37,13 @@ app.get('/api/:unix([0-9]{10,})', (req, res) => {
   res.json({ unix: parseInt(req.params.unix), utc: utcTime })
 })
 
-app.get('/api/:date(*)', (req, res) => {
+app.get('/api/:date?', (req, res) => {
+  console.log(req, req.params)
   if (new Date(req.params.date) != 'Invalid Date') {
     time = new Date(req.params.date)
     res.json({unix: Date.parse(time), utc: time.toUTCString()})
 }
-  else if (req.params.date == '') {
+  else if (req.params.date == undefined) {
     time = Date.now()
     res.json({unix: time, utc: new Date(time).toUTCString()})
   }
