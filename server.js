@@ -28,32 +28,33 @@ app.get("/", function (req, res) {
 //   let time = {localDateTime: Date(), unix: Date.now(), utc:  new Date().toUTCString()}
 //   res.json(time)
 // })
-app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
-  let utcTime = new Date(req.params.utc.split(' ')).toUTCString()
-  let unixTime = Date.parse(utcTime)
-  res.json({ unix: unixTime, utc: utcTime })
-})
+// app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
+//   let utcTime = new Date(req.params.utc.split(' ')).toUTCString()
+//   let unixTime = Date.parse(utcTime)
+//   res.json({ unix: unixTime, utc: utcTime })
+// })
 
-app.get('/api/:unix([0-9]{10,})', (req, res) => {
-  let unixTime = new Date(parseInt(req.params.unix))
-  let utcTime = unixTime.toUTCString()
-  res.json({ unix: parseInt(req.params.unix), utc: utcTime })
-})
+// app.get('/api/:unix([0-9]{10,})', (req, res) => {
+//   let unixTime = new Date(parseInt(req.params.unix))
+//   let utcTime = unixTime.toUTCString()
+//   res.json({ unix: parseInt(req.params.unix), utc: utcTime })
+// })
 
 app.get('/api/:date(*)', (req, res) => {
   console.log(req, new Date(req.params.date), Date.parse(req.params.date))
-  if (req.params.date == '') {
-    time = Date.now()
-    res.json({unix: time, utc: new Date(time).toUTCString()})
-  }
-  else if (new Date(req.params.date) == 'Invalid Date') {
-    res.json({error:'Invalid Date'})
-  }  
-  else if (new Date(req.params.date) != 'Invalid Date') {
+  if (new Date(req.params.date) != 'Invalid Date') {
     time = Date.parse(req.params.date)
     res.json({unix: parseInt(time), utc:new Date(time).toUTCString()})
 }
+  else if (new Date(req.params.date) == 'Invalid Date') {
+    res.json({error:'Invalid Date'})
+  }  
+  else {
+    time = Date.now()
+    res.json({unix: time, utc: new Date(time).toUTCString()})
+  }
 })
+
 
 
 // listen for requests :)
