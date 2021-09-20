@@ -37,9 +37,12 @@ app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
 app.get('/api/:unix([0-9]{10,})', (req, res) => {
   let unixTime = new Date(parseInt(req.params.unix))
   let utcTime = unixTime.toUTCString()
-  res.json({ unix: unixTime, utc: utcTime })
+  res.json({ unix: parseInt(req.params.unix), utc: utcTime })
 })
 
+app.get('api/*', (req, res) => {
+  res.json({error: "Invalid Date"})
+})
 
 
 // listen for requests :)
