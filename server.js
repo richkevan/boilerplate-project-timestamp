@@ -40,18 +40,18 @@ app.get('/api/:unix([0-9]{10,})', (req, res) => {
   res.json({ unix: parseInt(req.params.unix), utc: utcTime })
 })
 
-app.get('/api/:date(?)', (req, res) => {
+app.get('/api/:date(*)', (req, res) => {
   if (new Date(req.params.date) != 'Invalid Date') {
     time = new Date(req.params.date)
     res.json({unix: Date.parse(time), utc: time.toUTCString()})
 }
-  else if (new Date(req.params.date) == 'Invalid Date') {
-    res.json({error:'Invalid Date'})
-  }  
-  else {
+  else if (req.params.date == '') {
     time = Date.now()
     res.json({unix: time, utc: new Date(time).toUTCString()})
   }
+  else if (new Date(req.params.date) == 'Invalid Date') {
+    res.json({error:'Invalid Date'})
+  }  
 })
 
 
