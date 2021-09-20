@@ -24,15 +24,15 @@ app.get("/", function (req, res) {
 //   res.json({greeting: 'hello API'});
 // });
 
-// app.get("/api/currenttime",(req, res) => {
-//   let time = {localDateTime: Date(), unix: Date.now(), utc:  new Date().toUTCString()}
-//   res.json(time)
-// })
-app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
-  let utcTime = new Date(req.params.utc.split(' ')).toUTCString()
-  let unixTime = Date.parse(utcTime)
-  res.json({ unix: unixTime, utc: utcTime })
+app.get("/api/timestamp",(req, res) => {
+  let time = {unix: Date.now(), utc: new Date().toUTCString()}
+  res.json(time)
 })
+// app.get('/api/:utc([0-9]{4}-[0-9]{2}-[0-9]{2})', (req, res) => {
+//   let utcTime = new Date(req.params.utc.split(' ')).toUTCString()
+//   let unixTime = Date.parse(utcTime)
+//   res.json({ unix: unixTime, utc: utcTime })
+// })
 
 app.get('/api/:unix([0-9]{10,})', (req, res) => {
   let unixTime = new Date(parseInt(req.params.unix))
